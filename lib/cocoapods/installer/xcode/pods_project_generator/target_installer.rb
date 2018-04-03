@@ -102,13 +102,13 @@ module Pod
           # @return [Void]
           #
           def update_changed_file(generator, path)
-            path.dirname.mkpath
             if path.exist?
               generator.save_as(support_files_temp_dir)
               unless FileUtils.identical?(support_files_temp_dir, path)
                 FileUtils.mv(support_files_temp_dir, path)
               end
             else
+              path.dirname.mkpath
               generator.save_as(path)
             end
             clean_support_files_temp_dir if support_files_temp_dir.exist?
